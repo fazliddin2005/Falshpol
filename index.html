@@ -127,8 +127,13 @@ nav.desktop a:hover,.nav-active{color:var(--text)!important;background:var(--sur
 .carousel-item{scroll-snap-align:start;flex:0 0 85%;max-width:320px;flex-shrink:0}
 @media(min-width:769px){
   .carousel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-  .carousel{display:none!important}
+  /* Faqat prod va app carousel desktop da yashiriladi */
+  #prod-carousel,#app-carousel{display:none!important}
   .carousel-item{max-width:none}
+  /* proj, cert carousel desktop da ko'rinadi */
+  #proj-carousel,#cert-carousel{display:flex!important}
+  #proj-carousel .carousel-item{flex:0 0 31%;max-width:400px}
+  #cert-carousel .carousel-item{flex:0 0 23%;max-width:340px}
 }
 @media(max-width:768px){
   .carousel-grid{display:none!important}
