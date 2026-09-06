@@ -14,8 +14,8 @@
 <meta name="theme-color" content="#13141a">
 <title>Фальшпол в Ташкенте и по Узбекистану | ДСП и Фибробетон | OpenData Falshpol</title>
 <meta name="description" content="Фальшпол в Ташкенте и по всему Узбекистану. ДСП от 800 000 сум/м², Фибробетон от 1 750 000 сум/м². Поставка и монтаж под ключ. Сертификат МЧС НГ. 100+ проектов. OpenData Falshpol ☎ +998 99 919 33 22">
-<meta name="keywords" content="фальшпол, фальшпол Ташкент, фальшпол цена, фальшпол ДСП, фальшпол фибробетон, фальшпол Узбекистан, поднятый пол Ташкент, поднятый пол цена, поднятый пол серверная, фальшпол монтаж, фальшпол под ключ, фальшпол для серверной, фальшпол для ЦОД, фальшпол для офиса, фальшпол купить, фальшпол установка, технический пол Ташкент, кабельный пол Ташкент, фальшпол Самарканд, фальшпол Бухара, фальшпол Андижан, фальшпол Фергана, фальшпол Наманган, raised floor Tashkent, raised floor Uzbekistan, falshpol Toshkent, falshpol narxi, OpenData Falshpol, фальшпол сертификат МЧС, фальшпол НГ, фальшпол 600x600, поднятый пол 800000 сум">
-<meta property="og:title" content="Фальшпол в Ташкенте | ДСП и Фибробетон | OpenData Falshpol">
+<meta name="keywords" content="фальшпол, фальшпол Ташкент, фальшпол цена, фальшпол ДСП, фальшпол фибробетон, фальшпол Узбекистан, поднятый пол Ташкент, поднятый пол цена, фальшпол монтаж, фальшпол под ключ, фальшпол серверная, фальшпол ЦОД, фальшпол офис, фальшпол купить, технический пол Ташкент, фальшпол Самарканд, фальшпол Бухара, фальшпол Андижан, фальшпол Фергана, фальшпол Наманган, raised floor Tashkent, raised floor Uzbekistan, falshpol Toshkent, falshpol narxi, OpenData Falshpol, фальшпол сертификат МЧС, фальшпол НГ, фальшпол 600x600">
+<meta property="og:title" content="OpenData Falshpol — Алюминиевый фальшпол в Ташкенте">
 <meta property="og:description" content="Фальшпол 600×600 мм, до 3 т/м². От 800 000 сум/м². +998 99 919 33 22">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://open-data-falshpol.uz">
@@ -1557,7 +1557,7 @@ const CHAT = '1519856274';
 /* ── TELEGRAM ── */
 async function tgSend(msg) {
   try {
-    const r = await fetch(`https://api.telegram.org/bot$8126422340:AAFoZszRVjBRu5Dx5YwXCEzUkJL0UDkZPtA/sendMessage`, {
+    const r = await fetch(`https://api.telegram.org/bot${BOT}/sendMessage`, {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({chat_id:CHAT, text:msg, parse_mode:'HTML'})
     });
@@ -1573,6 +1573,10 @@ async function track(type, val) {
   const icons = {phone:'📞',telegram:'✈️'};
   const device = /Mobi|Android/i.test(navigator.userAgent) ? 'Мобильный' : 'Компьютер';
   tgSend(`${icons[type]||'👆'} <b>Клик — OpenData Falshpol</b>\n📌 <b>Тип:</b> ${type === 'phone' ? 'Звонок' : 'Telegram'}\n📌 <b>Значение:</b> ${val}\n📱 <b>Устройство:</b> ${device}\n🕐 <b>Время:</b> ${now()}`);
+  if (typeof gtag !== 'undefined') {
+    if (type === 'phone') gtag('event', 'conversion', {'send_to': 'AW-18432437423'});
+    gtag('event', type + '_click', {'event_category': 'contact', 'event_label': val});
+  }
 }
 
 /* ── VALIDATE PHONE ── */
