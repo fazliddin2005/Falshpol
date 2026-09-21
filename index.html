@@ -8,6 +8,29 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'AW-18432437423');
+
+  // ── REMARKETING / ОБУЧЕНИЕ (Dynamic Remarketing — страница посещения) ──
+  gtag('event', 'page_view', {
+    'send_to': 'AW-18432437423'
+  });
+</script>
+
+<!-- ══════════════════════════════════════════════════════
+     КОНВЕРСИЯ «ПОКУПКА» — срабатывает при успешной заявке
+     Conversion Label нужно вставить вместо CONVERSION_LABEL
+     Берите здесь: Google Ads → Цели → Конверсии → Покупка → Тег
+     ══════════════════════════════════════════════════════ -->
+<script>
+  // Глобальная функция — вызывается после успешной отправки любой формы
+  function fireConversionPokupka() {
+    if (typeof gtag === 'undefined') return;
+    gtag('event', 'conversion', {
+      'send_to': 'AW-18432437423/CONVERSION_LABEL',
+      'value': 1.0,
+      'currency': 'UZS',
+      'transaction_id': 'lead_' + Date.now()
+    });
+  }
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,viewport-fit=cover">
@@ -1659,7 +1682,7 @@ async function sendCalcBot() {
   const strs = document.getElementById('c-str').textContent;
   const msg = `📊 <b>Расчёт материалов — OpenData Falshpol</b>\n\n📞 <b>Телефон:</b> ${phone}\n📐 <b>Площадь:</b> ${area} м²${reserve ? ' (+10%)' : ''}\n🏢 <b>Тип:</b> ${type}\n\n📦 <b>Панели:</b> ${panels} шт\n⚙️ <b>Пьедесталы:</b> ${peds} шт\n🔩 <b>Стрингеры:</b> ${strs} шт\n\n🕐 <b>Время:</b> ${now()}`;
   const ok = await tgSend(msg);
-  if (ok) { alert('✅ Расчёт отправлен! Инженер свяжется с вами.'); closeModal('modal-calc'); }
+  if (ok) { fireConversionPokupka(); alert('✅ Расчёт отправлен! Инженер свяжется с вами.'); closeModal('modal-calc'); }
   else alert('Ошибка. Позвоните: +998 99 919 33 22');
 }
 
@@ -1702,6 +1725,7 @@ async function submitOrder(btn) {
   const ok = await tgSend(msg);
   btn.disabled = false;
   if (ok) {
+    fireConversionPokupka(); // ← Покупка конверсия
     document.getElementById('o-success').classList.add('show');
     btn.textContent = '✅ Отправлено!'; btn.style.background = '#16a34a'; btn.style.color = '#fff';
     setTimeout(() => closeModal('modal-order'), 3000);
@@ -1729,6 +1753,7 @@ async function submitCTA(btn) {
   const ok = await tgSend(msg);
   btn.disabled = false;
   if (ok) {
+    fireConversionPokupka(); // ← Покупка конверсия
     document.getElementById('cta-success').classList.add('show');
     btn.textContent = '✅ Отправлено!'; btn.style.background = '#16a34a';
     document.getElementById('cta-name').value = '';
